@@ -19,7 +19,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -27,7 +26,7 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await PingKit.platformVersion;
+      platformVersion = await PingKit.getPingDelay("192.168.199.1");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -50,7 +49,11 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: InkWell(
+              onTap: () {
+                initPlatformState();
+              },
+              child: Text('Running on: $_platformVersion\n')),
         ),
       ),
     );
